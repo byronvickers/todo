@@ -9,11 +9,24 @@
 todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArray) {
 	var url = 'https://fiery-heat-9220.firebaseio.com/todos';
 	var fireRef = new Firebase(url);
+	
+    if ($location.path() === '') {
+		$location.path('/');
+	}
 
 	// Bind the todos to the firebase provider.
-	$scope.todos = $firebaseArray(fireRef);
-	$scope.newTodo = '';
-	$scope.editedTodo = null;
+	$scope.$on('$locationChangeSuccess', function() {
+	    if ($location.path() === '') {
+            $location.path('/');
+        }
+    	$scope.todos = $firebaseArray(fireRef.child($location.path()));
+	    $scope.newTodo = '';
+	    $scope.editedTodo = null;
+	}, true);
+	
+	$scope.todos = $firebaseArray(fireRef.child($location.path()));
+    $scope.newTodo = '';
+    $scope.editedTodo = null;
 
 	$scope.$watch('todos', function () {
 		var total = 0;
@@ -46,6 +59,11 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 		});
 		$scope.newTodo = '';
 	};
+	
+	$scope.toggleTodo = function (todo) {
+	    todo.completed = !todo.completed
+	    $scope.todos.$save(todo)
+	}
 
 	$scope.editTodo = function (todo) {
 		$scope.editedTodo = todo;
@@ -85,9 +103,12 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 			$scope.todos.$save(todo);
 		});
 	};
-
-	if ($location.path() === '') {
-		$location.path('/');
+	
+	$scope.submitPath = function (path) {
+	    $location.path(path)
+	    return path
 	}
+
+    $scope.path = $location.path()
 	$scope.location = $location;
 });
