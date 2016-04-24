@@ -105,8 +105,11 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 	};
 	
 	$scope.submitPath = function (path) {
+	    if (path[0] != "/") {
+	        path = "/" + path
+	    }
 	    $location.path(path)
-	    return path
+	    $scope.path = path
 	}
 
     $scope.path = $location.path()
