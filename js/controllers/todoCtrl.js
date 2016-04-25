@@ -10,23 +10,27 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 	var url = 'https://fiery-heat-9220.firebaseio.com/todos';
 	var fireRef = new Firebase(url);
 	
-    if ($location.path() === '') {
-		$location.path('/');
-	}
-
-	// Bind the todos to the firebase provider.
-	$scope.$on('$locationChangeSuccess', function() {
-	    if ($location.path() === '') {
+	var fixLocationPath = function () {
+        if ($location.path() === '') {
             $location.path('/');
         }
-    	$scope.todos = $firebaseArray(fireRef.child($location.path()));
-	    $scope.newTodo = '';
-	    $scope.editedTodo = null;
+    }
+    fixLocationPath()
+    
+	// Bind the todos to the firebase provider.
+	$scope.$on('$locationChangeSuccess', function() {
+	    fixLocationPath()
+    	getFireBaseArray()
+	    
+	    $scope.path = $location.path() // why is this not updated automatically in the $apply()?
 	}, true);
 	
-	$scope.todos = $firebaseArray(fireRef.child($location.path()));
-    $scope.newTodo = '';
-    $scope.editedTodo = null;
+	var getFireBaseArray = function () {
+	    $scope.todos = $firebaseArray(fireRef.child($location.path()));
+        $scope.newTodo = '';
+        $scope.editedTodo = null;
+	}
+	getFireBaseArray()
 
 	$scope.$watch('todos', function () {
 		var total = 0;
@@ -110,6 +114,10 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 	    }
 	    $location.path(path)
 	    $scope.path = path
+	}
+	
+	$scope.doBlur = function ($event) {
+	    $event.target.blur()
 	}
 
     $scope.path = $location.path()
