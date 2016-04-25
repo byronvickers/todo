@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
 		<style>[ng-cloak] { display: none; }</style>
 	</head>
-	<body>
+	<body style="width:90%;max-width:1000px;">
 		<section id="todoapp" ng-controller="TodoCtrl">
 			<header id="header">
 				<h1>todos <input style="background-color:inherit;border:medium none;font:20px 'Helvetica Neue';font-weight:200;width:25%;" ng-model="path" ng-change="submitPath(path)" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 1000, 'blur': 0} }" ng-enter="submitPath(path)" ng-blur-on-enter="true"></input></h1>
