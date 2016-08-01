@@ -23,11 +23,15 @@
 						<div class="view">
 							<input class="toggle" type="checkbox" ng-model="todo.completed" ng-change="todos.$save(todo)">
 							<label ng-click="toggleTodo(todo)" ng-dblclick="editTodo(todo)">{{todo.title}}</label>
-							<button class="destroy" ng-click="removeTodo(todo)"></button>
+							<button class="todo-button note-button" ng-click="showNotesToggle(todo)" ng-class="{ minus: todo.showNotes }"></button>
+							<button class="todo-button destroy" ng-click="removeTodo(todo)"></button>
 						</div>
 						<form ng-submit="doneEditing(todo)">
 							<input class="edit" ng-model="todo.title" todo-escape="revertEditing(todo)" todo-blur="doneEditing(todo)" todo-focus="todo == editedTodo">
 						</form>
+						<div class="note-box" ng-class="{hidden: !todo.showNotes}">
+						    <span class="note-title">Notes: </span><textarea class="note-text" ng-model="todo.notes"></textarea>
+						</div>
 					</li>
 				</ul>
 			</section>
