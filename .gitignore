@@ -1,4 +1,6 @@
+npm-debug.log
 firebase-debug.*
+
 node_modules/angular/*
 !node_modules/angular/angular.js
 node_modules/angularfire/*
