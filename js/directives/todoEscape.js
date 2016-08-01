@@ -11,6 +11,10 @@ todomvc.directive('todoEscape', function () {
 		elem.bind('keydown', function (event) {
 			if (event.keyCode === ESCAPE_KEY) {
 				scope.$apply(attrs.todoEscape);
+				
+				if(scope.$eval(attrs.ngBlurOnEsc)){
+                    elem[0].blur()
+                }
 			}
 		});
 

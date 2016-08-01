@@ -47,6 +47,9 @@ todomvc.directive('ngEnter', function () {
                 }
             };
         });
+        scope.$on('$destroy', function () {
+			element.unbind('keydown keypress');
+		});
     };
 });
     

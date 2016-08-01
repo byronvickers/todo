@@ -124,10 +124,9 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 	$scope.location = $location;
 	
 	$scope.showNotesToggle = function (todo) {
-	    console.log("hello!")
-	    console.log(todo.showNotes)
 	    if (todo.showNotes) {
 	        todo.showNotes = false;
+	        $scope.todos.$save(todo)
 	    } else {
 	        todo.showNotes = true;
 	    }

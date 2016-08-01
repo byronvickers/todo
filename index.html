@@ -20,17 +20,18 @@
 				<label for="toggle-all">Mark all as complete</label>
 				<ul id="todo-list">
 					<li ng-repeat="(id, todo) in todos | todoFilter" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
-						<div class="view">
+						<div class="view wrapper">
 							<input class="toggle" type="checkbox" ng-model="todo.completed" ng-change="todos.$save(todo)">
 							<label ng-click="toggleTodo(todo)" ng-dblclick="editTodo(todo)">{{todo.title}}</label>
 							<button class="todo-button note-button" ng-click="showNotesToggle(todo)" ng-class="{ minus: todo.showNotes }"></button>
 							<button class="todo-button destroy" ng-click="removeTodo(todo)"></button>
+							<div ng-show="todo.notes" class="ribbon-wrapper-red"><div class="ribbon-red" ng-click="showNotesToggle(todo)">NOTE</div></div>
 						</div>
 						<form ng-submit="doneEditing(todo)">
 							<input class="edit" ng-model="todo.title" todo-escape="revertEditing(todo)" todo-blur="doneEditing(todo)" todo-focus="todo == editedTodo">
 						</form>
 						<div class="note-box" ng-class="{hidden: !todo.showNotes}">
-						    <span class="note-title">Notes: </span><textarea class="note-text" ng-model="todo.notes"></textarea>
+						    <span class="note-title">Notes: </span><textarea class="note-text" ng-model="todo.notes" todo-escape="showNotesToggle(todo)" ng-blur-on-esc="true"></textarea>
 						</div>
 					</li>
 				</ul>
