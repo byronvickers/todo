@@ -1,6 +1,6 @@
+firebase-debug.*
 node_modules/angular/*
 !node_modules/angular/angular.js
-
 node_modules/angularfire/*
 node_modules/angularfire/dist/*
 !node_modules/angularfire/dist/angularfire.js

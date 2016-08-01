@@ -41,6 +41,10 @@ todomvc.directive('ngEnter', function () {
                 });
  
                 event.preventDefault();
+                
+                if(scope.$eval(attrs.ngBlurOnEnter)){
+                    element[0].blur()
+                }
             };
         });
     };
